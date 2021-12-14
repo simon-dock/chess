@@ -1,5 +1,6 @@
 import pygame
 import random
+from pygame.locals import *
 
 #intialization display
 pygame.init()
@@ -16,12 +17,13 @@ for i in range(2):
 
 #chess board
 board = [[[-1 for k in range(2)] for j in range(8)]for i in range(8)]
+select_position = [[-1 for j in range(8)]for i in range(8)]
 
 #colors
 WHITE = [255, 255, 255]
 BLACK = [0, 0, 0]
 GRAY = [193, 162, 129]
-
+BLUE = [51, 255, 255]
 
 def draw_board():
 
@@ -29,13 +31,31 @@ def draw_board():
         for j in range(8):
             x_ren = 100*(j+1)+10*j
             y_ren = 100*(i+1)+10*i
-            pygame.draw.rect(WIN, GRAY, (x_ren, y_ren, 100, 100))
+            if select_position[i][j] == 1:
+                pygame.draw.rect(WIN, BLUE, (x_ren, y_ren, 100, 100))
+            else:
+                pygame.draw.rect(WIN, GRAY, (x_ren, y_ren, 100, 100))
+
             if board[i][j][0] == -1: continue
             WIN.blit(pieces[board[i][j][0]][board[i][j][1]],(x_ren+25,y_ren)) 
 
     start_pos = [[80,80],[990,80],[990,990],[80,990]]
     pygame.draw.lines(WIN, WHITE, True, start_pos, 2)
 
+
+def judge_position(x, y):
+
+    for i in range(8):
+        for j in range(8):
+            x_ren = 100*(j+1)+10*j
+            y_ren = 100*(i+1)+10*i
+            if x >= x_ren and x_ren+100 >= x and y >= y_ren and y_ren+100 >= y:
+                select_position[i][j] = 1
+            else:
+                select_position[i][j] = -1
+
+def move_pieces():
+    pass
 
 def init_board():
 
@@ -73,8 +93,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-
-        
+            if event.type == MOUSEBUTTONDOWN and event.button == 1:
+                x, y = event.pos
+                judge_position(x,y)
+                
+    
         WIN.fill(BLACK)
         draw_board()
         pygame.display.update()

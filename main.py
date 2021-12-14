@@ -12,7 +12,7 @@ pygame.display.set_caption("Chess")
 pieces = [['0' for j in range(6)]for i in range(2)]
 for i in range(2):
     for j in range(6):
-        pieces[i][j] = pygame.image.load(f"{i}{j}.png")
+        pieces[i][j] = pygame.image.load(f"./image/{i}{j}.png")
 
 #chess board
 board = [[[0 for k in range(2)] for j in range(8)]for i in range(8)]
@@ -61,7 +61,6 @@ def init_board():
     
     for x in range(8):
         board[7][x] = [1,0]
-
 
 
 def main():

@@ -15,12 +15,12 @@ for i in range(2):
         pieces[i][j] = pygame.image.load(f"./image/{i}{j}.png")
 
 #chess board
-board = [[[0 for k in range(2)] for j in range(8)]for i in range(8)]
+board = [[[-1 for k in range(2)] for j in range(8)]for i in range(8)]
 
 #colors
 WHITE = [255, 255, 255]
 BLACK = [0, 0, 0]
-GRAY = [230, 255, 230]
+GRAY = [193, 162, 129]
 
 
 def draw_board():
@@ -30,7 +30,8 @@ def draw_board():
             x_ren = 100*(j+1)+10*j
             y_ren = 100*(i+1)+10*i
             pygame.draw.rect(WIN, GRAY, (x_ren, y_ren, 100, 100))
-            WIN.blit(pieces,(x_ren,y_ren)) 
+            if board[i][j][0] == -1: continue
+            WIN.blit(pieces[board[i][j][0]][board[i][j][1]],(x_ren+25,y_ren)) 
 
     start_pos = [[80,80],[990,80],[990,990],[80,990]]
     pygame.draw.lines(WIN, WHITE, True, start_pos, 2)
@@ -50,17 +51,17 @@ def init_board():
     for x in range(8):
         board[1][x] = [0,0]
 
-    board[6][0] = [1,1]
-    board[6][1] = [1,2]
-    board[6][2] = [1,3]
-    board[6][3] = [1,5]
-    board[6][4] = [1,4]
-    board[6][5] = [1,3]
-    board[6][6] = [1,2]
-    board[6][7] = [1,1]
+    board[7][0] = [1,1]
+    board[7][1] = [1,2]
+    board[7][2] = [1,3]
+    board[7][3] = [1,5]
+    board[7][4] = [1,4]
+    board[7][5] = [1,3]
+    board[7][6] = [1,2]
+    board[7][7] = [1,1]
     
     for x in range(8):
-        board[7][x] = [1,0]
+        board[6][x] = [1,0]
 
 
 def main():
